@@ -1,13 +1,20 @@
 package main
 
 import (
+	"crypto/sha256"
 	"fmt"
-
-	"github.com/DShomin/lomitcoin/person"
 )
 
+type block struct {
+	data     string
+	hash     string
+	pervHash string
+}
+
 func main() {
-	lomit := person.Person{}
-	lomit.SetDetails("lomit", 30)
-	fmt.Println(lomit)
+	genesisBlock := block{"Genesis Block", "", ""}
+	hash := sha256.Sum256([]byte(genesisBlock.data + genesisBlock.pervHash))
+	hexHash := fmt.Sprintf("%x", hash)
+	genesisBlock.hash = hexHash
+	fmt.Println(genesisBlock)
 }
