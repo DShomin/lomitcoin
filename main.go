@@ -3,7 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	name := "lomit"
-	age := 30
-	fmt.Println(name, "is", age)
+	name := "Lomit! ! !! ! ! is my name"
+	for _, letter := range name {
+		fmt.Println(string(letter))
+	}
 }
