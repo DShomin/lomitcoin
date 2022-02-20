@@ -3,9 +3,12 @@ package main
 import "fmt"
 
 func main() {
-	foods := []string{"potato", "pizza", "pasta"}
-	fmt.Printf("%v\n", foods)
-	foods = append(foods, "tomato")
-	fmt.Printf("%v\n", foods)
-	fmt.Println(len(foods))
+	a := 2
+	// copy value
+	// b := a
+	// memorry address save
+	b := &a
+	// change value a
+	a = 50
+	fmt.Println(*b, b, &a)
 }
