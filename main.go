@@ -3,8 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	name := "Lomit! ! !! ! ! is my name"
-	for _, letter := range name {
-		fmt.Println(string(letter))
-	}
+	x := 19832798217598
+	xAsBinary := fmt.Sprintf("%b\n", x)
+	fmt.Println(x, xAsBinary)
 }
