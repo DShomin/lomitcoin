@@ -3,7 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	x := 19832798217598
-	xAsBinary := fmt.Sprintf("%b\n", x)
-	fmt.Println(x, xAsBinary)
+	foods := []string{"potato", "pizza", "pasta"}
+	fmt.Printf("%v\n", foods)
+	foods = append(foods, "tomato")
+	fmt.Printf("%v\n", foods)
+	fmt.Println(len(foods))
 }
