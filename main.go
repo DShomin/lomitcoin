@@ -1,7 +1,9 @@
 package main
 
-import explorer "github.com/DShomin/lomitcoin/explorer/templates"
+import (
+	"github.com/DShomin/lomitcoin/rest"
+)
 
 func main() {
-	explorer.Start()
+	rest.Start(4000)
 }
