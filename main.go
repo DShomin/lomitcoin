@@ -1,9 +1,7 @@
 package main
 
-import (
-	"github.com/DShomin/lomitcoin/rest"
-)
+import "github.com/DShomin/lomitcoin/cli"
 
 func main() {
-	rest.Start(4000)
+	cli.Start()
 }
