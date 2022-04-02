@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 
 	explorer "github.com/DShomin/lomitcoin/explorer/templates"
 	"github.com/DShomin/lomitcoin/rest"
@@ -16,7 +17,7 @@ func usage() {
 	fmt.Println("")
 	fmt.Println("-port : 	Set port of the serve")
 	fmt.Println("-mode : 	Choose mode 'html', 'rest', 'dual'")
-	os.Exit(0)
+	runtime.Goexit()
 }
 
 func Start() {

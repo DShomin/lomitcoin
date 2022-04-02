@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/DShomin/lomitcoin/blockchain"
 	"github.com/DShomin/lomitcoin/utils"
@@ -46,7 +45,7 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 			Payload:     "data:string",
 		},
 		{
-			URL:         url("/blocks/{id}"),
+			URL:         url("/blocks/{hash}"),
 			Method:      "GET",
 			Description: "See A block",
 		},
@@ -62,12 +61,12 @@ type addBlockBody struct {
 func blocks(rw http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		rw.Header().Add("Content-Type", "application/json")
-		json.NewEncoder(rw).Encode(blockchain.GetBlockchain().AllBlocks())
+		// rw.Header().Add("Content-Type", "application/json")
+		json.NewEncoder(rw).Encode(blockchain.Blockchain().Blocks())
 	case "POST":
 		var addBlockBody addBlockBody
 		utils.HandleErr(json.NewDecoder(r.Body).Decode(&addBlockBody))
-		blockchain.GetBlockchain().AddBlock(addBlockBody.Message)
+		blockchain.Blockchain().AddBlock(addBlockBody.Message)
 		rw.WriteHeader(http.StatusCreated)
 	}
 
@@ -75,9 +74,8 @@ func blocks(rw http.ResponseWriter, r *http.Request) {
 
 func block(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id, err := strconv.Atoi(vars["height"])
-	utils.HandleErr(err)
-	block, geterr := blockchain.GetBlockchain().GetBlock(id)
+	hash := vars["hash"]
+	block, geterr := blockchain.FindBlock(hash)
 	encoder := json.NewEncoder(rw)
 	if geterr == blockchain.ErrNotFound {
 		encoder.Encode(errorResponse{fmt.Sprint(geterr)})
@@ -98,7 +96,7 @@ func Start(aPort int) {
 	router.Use(jsonContentTypeMiddleware)
 	router.HandleFunc("/", documentation)
 	router.HandleFunc("/blocks", blocks)
-	router.HandleFunc("/blocks/{height:[0-9]+}", block)
+	router.HandleFunc("/blocks/{hash:[a-f0-9]+}", block)
 	fmt.Printf("Listening on http://localhost%s\n", port)
 	log.Fatal(http.ListenAndServe(port, router))
 }
